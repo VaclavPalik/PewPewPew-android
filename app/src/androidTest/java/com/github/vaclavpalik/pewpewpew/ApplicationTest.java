@@ -1,4 +1,4 @@
-package gitlab.tul.cz.pewpewpew;
+package com.github.vaclavpalik.pewpewpew;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

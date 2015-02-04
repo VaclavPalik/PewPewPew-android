@@ -1,4 +1,4 @@
-package gitlab.tul.cz.pewpewpew.fragments;
+package com.github.vaclavpalik.pewpewpew.fragments;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import gitlab.tul.cz.pewpewpew.R;
+import com.github.vaclavpalik.pewpewpew.R;
 
 
 /**

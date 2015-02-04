@@ -1,4 +1,4 @@
-package gitlab.tul.cz.pewpewpew.fragments;
+package com.github.vaclavpalik.pewpewpew.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,9 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import gitlab.tul.cz.pewpewpew.R;
+import com.github.vaclavpalik.pewpewpew.R;
 
-import gitlab.tul.cz.pewpewpew.model.Upgrades;
+import com.github.vaclavpalik.pewpewpew.model.Upgrades;
 
 /**
  * A fragment representing a list of Items.

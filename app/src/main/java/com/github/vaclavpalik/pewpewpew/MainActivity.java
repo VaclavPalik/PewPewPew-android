@@ -1,4 +1,4 @@
-package gitlab.tul.cz.pewpewpew;
+package com.github.vaclavpalik.pewpewpew;
 
 
 import android.app.Activity;
@@ -58,9 +58,9 @@ public class MainActivity extends ActionBarActivity implements MainActivity.Menu
     /**
      * A simple {@link android.support.v4.app.Fragment} subclass.
      * Activities that contain this fragment must implement the
-     * {@link gitlab.tul.cz.pewpewpew.MainActivity.MenuFragment.OnFragmentInteractionListener} interface
+     * {@link com.github.vaclavpalik.pewpewpew.MainActivity.MenuFragment.OnFragmentInteractionListener} interface
      * to handle interaction events.
-     * Use the {@link gitlab.tul.cz.pewpewpew.MainActivity.MenuFragment#newInstance} factory method to
+     * Use the {@link com.github.vaclavpalik.pewpewpew.MainActivity.MenuFragment#newInstance} factory method to
      * create an instance of this fragment.
      */
     public static class MenuFragment extends Fragment {

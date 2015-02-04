@@ -15,7 +15,7 @@
         <fragment
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:name="gitlab.tul.cz.pewpewpew.MainActivity$MenuFragment"
+            android:name="com.github.vaclavpalik.pewpewpew.MainActivity$MenuFragment"
             android:id="@+id/menu"
             tools:layout="@layout/fragment_menu" />
 
@@ -27,7 +27,7 @@
             <fragment
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:name="gitlab.tul.cz.pewpewpew.fragments.GameFragment"
+                android:name="com.github.vaclavpalik.pewpewpew.fragments.GameFragment"
                 android:id="@+id/mainFragmentArea"
                 tools:layout="@layout/fragment_game" />
         </FrameLayout>

@@ -1,8 +1,8 @@
-package gitlab.tul.cz.pewpewpew.model;
+package com.github.vaclavpalik.pewpewpew.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import gitlab.tul.cz.pewpewpew.model.Upgrades.Upgrade;
+import com.github.vaclavpalik.pewpewpew.model.Upgrades.Upgrade;
 
 public class Player {
 

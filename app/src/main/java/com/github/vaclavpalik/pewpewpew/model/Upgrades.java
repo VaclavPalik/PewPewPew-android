@@ -1,4 +1,4 @@
-package gitlab.tul.cz.pewpewpew.model;
+package com.github.vaclavpalik.pewpewpew.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
