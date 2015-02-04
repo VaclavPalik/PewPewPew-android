@@ -7,20 +7,20 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.github.vaclavpalik.pewpewpew.MainActivity;
 import com.github.vaclavpalik.pewpewpew.R;
 
-
 /**
- * A simple {@link Fragment} subclass.
+ * A simple {@link android.support.v4.app.Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link GameFragment.OnFragmentInteractionListener} interface
+ * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link GameFragment#newInstance} factory method to
+ * Use the {@link MenuFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GameFragment extends Fragment {
+public class MenuFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,6 +31,10 @@ public class GameFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    // Buttons
+    static private Button gameButton;
+    static private Button upgradeButton;
+    static private Button aboutButton;
 
     /**
      * Use this factory method to create a new instance of
@@ -38,11 +42,11 @@ public class GameFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment GameFragment.
+     * @return A new instance of fragment MenuFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static GameFragment newInstance(String param1, String param2) {
-        GameFragment fragment = MainActivity.getInstance().getGameFragment();
+    public static MenuFragment newInstance(String param1, String param2) {
+        MenuFragment fragment = new MenuFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -50,7 +54,7 @@ public class GameFragment extends Fragment {
         return fragment;
     }
 
-    public GameFragment() {
+    public MenuFragment() {
         // Required empty public constructor
     }
 
@@ -67,7 +71,47 @@ public class GameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_game, container, false);
+        View view = inflater.inflate(R.layout.fragment_menu, container, false);
+        gameButton = (Button) view.findViewById(R.id.button_game);
+        upgradeButton = (Button) view.findViewById(R.id.button_upgrades);
+        aboutButton = (Button) view.findViewById(R.id.button_about);
+        gameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.getInstance().setActiveFragment(MainActivity.getInstance().getGameFragment());
+                gameButton.setClickable(false);
+                gameButton.setEnabled(false);
+                upgradeButton.setClickable(true);
+                upgradeButton.setEnabled(true);
+                aboutButton.setClickable(true);
+                aboutButton.setEnabled(true);
+            }
+        });
+        upgradeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.getInstance().setActiveFragment(MainActivity.getInstance().getUpgradeFragment());
+                gameButton.setClickable(true);
+                gameButton.setEnabled(true);
+                upgradeButton.setClickable(false);
+                upgradeButton.setEnabled(false);
+                aboutButton.setClickable(true);
+                aboutButton.setEnabled(true);
+            }
+        });
+        aboutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.getInstance().setActiveFragment(MainActivity.getInstance().getAboutFragment());
+                gameButton.setClickable(true);
+                gameButton.setEnabled(true);
+                upgradeButton.setClickable(true);
+                upgradeButton.setEnabled(true);
+                aboutButton.setClickable(false);
+                aboutButton.setEnabled(false);
+            }
+        });
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -107,6 +151,7 @@ public class GameFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+        public void setActiveFragment(Fragment fragment);
     }
 
 }

@@ -9,11 +9,14 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.github.vaclavpalik.pewpewpew.MainActivity;
 import com.github.vaclavpalik.pewpewpew.R;
 
+import com.github.vaclavpalik.pewpewpew.model.Player;
 import com.github.vaclavpalik.pewpewpew.model.Upgrades;
 
 /**
@@ -47,11 +50,11 @@ public class UpgradeFragment extends Fragment implements AbsListView.OnItemClick
      * The Adapter which will be used to populate the ListView/GridView with
      * Views.
      */
-    private ListAdapter mAdapter;
+    private BaseAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
     public static UpgradeFragment newInstance(String param1, String param2) {
-        UpgradeFragment fragment = new UpgradeFragment();
+        UpgradeFragment fragment = MainActivity.getInstance().getUpgradeFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,6 +67,8 @@ public class UpgradeFragment extends Fragment implements AbsListView.OnItemClick
      * fragment (e.g. upon screen orientation changes).
      */
     public UpgradeFragment() {
+        //init the player
+        Player.getInstance();
     }
 
     @Override
@@ -77,7 +82,12 @@ public class UpgradeFragment extends Fragment implements AbsListView.OnItemClick
 
         // TODO: Change Adapter to display your content
         mAdapter = new ArrayAdapter<Upgrades.Upgrade>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, Upgrades.ITEMS);
+                android.R.layout.simple_list_item_1, android.R.id.text1, Upgrades.ITEMS){
+            @Override
+            public boolean isEnabled(int position) {
+                return (!Upgrades.ITEMS.get(position).isMaxed())&&Player.getInstance().getMoney()>=Upgrades.ITEMS.get(position).getCost();
+            }
+        };
     }
 
     @Override
@@ -120,7 +130,14 @@ public class UpgradeFragment extends Fragment implements AbsListView.OnItemClick
             // fragment is attached to one) that an item has been selected.
             mListener.onFragmentInteraction(Upgrades.ITEMS.get(position).id);
         }
+        Upgrades.Upgrade upgrade = Upgrades.ITEMS.get(position);
+        upgrade.tryBuy();
     }
+
+    public void notifyChanged(){
+        mAdapter.notifyDataSetChanged();
+    }
+
 
     /**
      * The default content for this Fragment has a TextView that is shown when
