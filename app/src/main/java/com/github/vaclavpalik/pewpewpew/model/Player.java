@@ -36,6 +36,8 @@ public class Player {
         return money;
     }
 
+    public int getIncome() {return income.getLevel()-1;}
+
     public void setMoney(int money) {
         this.money = money;
         ((TextView) MainActivity.getInstance().getMenuFragment().getView().findViewById(R.id.moneyCounter)).setText("Money: " + money);
