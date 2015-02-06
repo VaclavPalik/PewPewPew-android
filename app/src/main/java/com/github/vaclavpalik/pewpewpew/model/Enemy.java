@@ -70,7 +70,7 @@ public class Enemy {
     }
 
     private void onDestroy() {
-        Player.getInstance().setMoney(Player.getInstance().getMoney()+Player.getInstance().getIncome());
+        Player.getInstance().setMoney(Player.getInstance().getMoney()+money+Player.getInstance().getIncome());
     }
 
     public int getWidth() {
