@@ -1,15 +1,22 @@
 package com.github.vaclavpalik.pewpewpew.fragments;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.vaclavpalik.pewpewpew.MainActivity;
 import com.github.vaclavpalik.pewpewpew.R;
+import com.github.vaclavpalik.pewpewpew.model.Enemy;
+import com.github.vaclavpalik.pewpewpew.model.Game;
 
 
 /**
@@ -31,6 +38,8 @@ public class GameFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private volatile Integer height;
+    private volatile Integer width;
 
     /**
      * Use this factory method to create a new instance of
@@ -54,6 +63,13 @@ public class GameFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public void addEnemy(Enemy enemy){
+        SurfaceView view = (SurfaceView) getView().findViewById(R.id.surfaceView);
+        Canvas canvas =view.getHolder().lockCanvas();
+        canvas.drawBitmap(enemy.getBitmap(), enemy.getX(), enemy.getY(), null);
+        view.getHolder().unlockCanvasAndPost(canvas);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +83,15 @@ public class GameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_game, container, false);
+        View view = inflater.inflate(R.layout.fragment_game, container, false);
+        ((SurfaceView) view.findViewById(R.id.surfaceView)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Game.getInstance().handleHit((int) event.getX(), (int) event.getY());
+                return true;
+            }
+        });
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -92,6 +116,28 @@ public class GameFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public int getHeight() {
+        if(height==null){
+            synchronized (this){
+                if(height==null){
+                    height=getView().findViewById(R.id.surfaceView).getHeight();
+                }
+            }
+        }
+        return height;
+    }
+
+    public int getWidth() {
+        if(width==null){
+            synchronized (this){
+                if(width==null){
+                    width=getView().findViewById(R.id.surfaceView).getWidth();
+                }
+            }
+        }
+        return width;
     }
 
     /**
