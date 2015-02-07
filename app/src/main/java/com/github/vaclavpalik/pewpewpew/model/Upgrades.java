@@ -65,7 +65,7 @@ public class Upgrades {
 
         @Override
         public String toString() {
-            return name + "\n" + desc + "\n Level: " + level + " Cost: "+getCost();
+            return name + "\n" + desc + "\n Level: " + (isMaxed()?"MAXED":(level + " Cost: "+getCost()));
         }
 
         public boolean tryBuy() {

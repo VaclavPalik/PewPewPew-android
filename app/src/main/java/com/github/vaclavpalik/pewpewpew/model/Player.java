@@ -12,6 +12,7 @@ import java.util.List;
 public class Player {
 
     private int money = 0;
+    private int score = 0;
     private List<Upgrade> upgrades = new ArrayList<>();
     private Upgrade damage= new Upgrade("damage", "Damage", "+1 to damage", 100, 2, 10);
     private Upgrade income= new Upgrade("income", "Income", "+1 to money from all enemies", 100, 2, 10);
@@ -21,7 +22,7 @@ public class Player {
         registerUpgrade(damage);
         registerUpgrade(income);
         registerUpgrade(range);
-        setMoney(5000); //debug
+        setMoney(500000); //debug
     }
 
     public static Player getInstance() {
@@ -52,11 +53,20 @@ public class Player {
         return range.getLevel()-1;
     }
 
+    public int getScore() {
+        return score;
+    }
+
     private static class SingletonHolder {
         private static Player instance = new Player();
     }
     private void registerUpgrade(Upgrade upgrade){
         Upgrades.addItem(upgrade);
         upgrades.add(upgrade);
+    }
+    
+    public void addScore(int score){
+        this.score+=score;
+        Game.getInstance().checkNextLevel();
     }
 }
