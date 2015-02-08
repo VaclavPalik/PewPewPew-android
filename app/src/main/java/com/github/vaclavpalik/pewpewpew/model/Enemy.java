@@ -10,7 +10,7 @@ public class Enemy {
     private final int height;
     private int hp;
     private final int armor;
-    private final int money;
+    private final int value;
 
     public Enemy(int x, int y, IEnemyTemplate template) {
 
@@ -21,7 +21,7 @@ public class Enemy {
         width = template.getWidth();
         hp = template.getHP();
         armor = template.getArmor();
-        money = template.getMoney();
+        value = template.getValue();
     }
 
     public int getX() {
@@ -70,7 +70,8 @@ public class Enemy {
     }
 
     private void onDestroy() {
-        Player.getInstance().setMoney(Player.getInstance().getMoney()+money+Player.getInstance().getIncome());
+        Player.getInstance().setMoney(Player.getInstance().getMoney()+ value +Player.getInstance().getIncome());
+        Player.getInstance().addScore(value);
     }
 
     public int getWidth() {

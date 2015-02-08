@@ -5,11 +5,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.view.SurfaceView;
 
+import com.android.internal.util.Predicate;
 import com.github.vaclavpalik.pewpewpew.MainActivity;
 import com.github.vaclavpalik.pewpewpew.R;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -18,6 +21,7 @@ public class Game {
 
     private Set<Enemy> enemies = new HashSet<>();
     private int level = 0;
+    private Map<Integer, Predicate<Integer>> levelConditions = new HashMap<>();
     private Random random = new Random();
 
     private Game() {
@@ -37,6 +41,18 @@ public class Game {
             }
         });
         spawnTask.start();
+        levelConditions.put(0, new Predicate<Integer>() {
+            @Override
+            public boolean apply(Integer integer) {
+                return Player.getInstance().getScore()>=50;
+            }
+        });
+        levelConditions.put(1, new Predicate<Integer>() {
+            @Override
+            public boolean apply(Integer integer) {
+                return Player.getInstance().getScore()>=200;
+            }
+        });
     }
 
     public static Game getInstance() {
@@ -71,6 +87,11 @@ public class Game {
 
     public int getLevel() {
         return level;
+    }
+
+    public void checkNextLevel() {
+        if(levelConditions.get(level).apply(level))
+            level++;
     }
 
     private static class SingletonHolder {

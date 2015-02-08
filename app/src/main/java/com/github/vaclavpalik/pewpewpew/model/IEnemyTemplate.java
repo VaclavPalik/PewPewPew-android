@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
 public interface IEnemyTemplate {
     public int getHP();
     public int getArmor();
-    public int getMoney();
+    public int getValue();
     public int getWidth();
     public int getHeight();
     public Bitmap getBitmap();
