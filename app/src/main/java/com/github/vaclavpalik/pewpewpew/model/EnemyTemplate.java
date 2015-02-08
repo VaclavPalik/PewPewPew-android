@@ -10,7 +10,8 @@ import com.github.vaclavpalik.pewpewpew.R;
 public enum EnemyTemplate implements IEnemyTemplate {
     FIGHTER(1,0,1,R.drawable.fighter),
     MOOK(2,0, 2, R.drawable.mook),
-    BOMBER(5,1,5, R.drawable.bomber);
+    BOMBER(5,1,5, R.drawable.bomber),
+    ARMORED(5, 5, 15, R.drawable.armored);
 
     private final int hp;
     private final int armor;

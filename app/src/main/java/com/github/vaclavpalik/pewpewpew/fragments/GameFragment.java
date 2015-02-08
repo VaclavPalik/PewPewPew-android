@@ -1,12 +1,11 @@
 package com.github.vaclavpalik.pewpewpew.fragments;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
+import android.app.Fragment;
+import android.content.res.Configuration;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
@@ -17,6 +16,7 @@ import com.github.vaclavpalik.pewpewpew.MainActivity;
 import com.github.vaclavpalik.pewpewpew.R;
 import com.github.vaclavpalik.pewpewpew.model.Enemy;
 import com.github.vaclavpalik.pewpewpew.model.Game;
+import com.github.vaclavpalik.pewpewpew.model.Player;
 
 
 /**
@@ -63,13 +63,6 @@ public class GameFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public void addEnemy(Enemy enemy){
-        SurfaceView view = (SurfaceView) getView().findViewById(R.id.surfaceView);
-        Canvas canvas =view.getHolder().lockCanvas();
-        canvas.drawBitmap(enemy.getBitmap(), enemy.getX(), enemy.getY(), null);
-        view.getHolder().unlockCanvasAndPost(canvas);
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +84,17 @@ public class GameFragment extends Fragment {
                 return true;
             }
         });
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Game.getInstance();
+            }
+        }).start();
         return view;
     }
 

@@ -22,7 +22,7 @@ public class Player {
         registerUpgrade(damage);
         registerUpgrade(income);
         registerUpgrade(range);
-        setMoney(500000); //debug
+        setMoney(0); //debug
     }
 
     public static Player getInstance() {
@@ -41,7 +41,9 @@ public class Player {
 
     public void setMoney(int money) {
         this.money = money;
-        ((TextView) MainActivity.getInstance().getMenuFragment().getView().findViewById(R.id.moneyCounter)).setText("Money: " + money);
+        TextView textView = (TextView) MainActivity.getInstance().getMenuFragment().getView().findViewById(R.id.moneyCounter);
+        textView.clearComposingText();
+        textView.setText("Money: " + money);
         //MainActivity.getInstance().getUpgradeFragment().notifyChanged();
     }
 
@@ -60,6 +62,7 @@ public class Player {
     private static class SingletonHolder {
         private static Player instance = new Player();
     }
+
     private void registerUpgrade(Upgrade upgrade){
         Upgrades.addItem(upgrade);
         upgrades.add(upgrade);

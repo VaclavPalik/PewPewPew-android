@@ -8,9 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.github.vaclavpalik.pewpewpew.MainActivity;
 import com.github.vaclavpalik.pewpewpew.R;
+import com.github.vaclavpalik.pewpewpew.model.Game;
+import com.github.vaclavpalik.pewpewpew.model.Player;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.

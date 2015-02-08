@@ -12,6 +12,12 @@ import com.github.vaclavpalik.pewpewpew.fragments.AboutFragment;
 import com.github.vaclavpalik.pewpewpew.fragments.GameFragment;
 import com.github.vaclavpalik.pewpewpew.fragments.MenuFragment;
 import com.github.vaclavpalik.pewpewpew.fragments.UpgradeFragment;
+import com.github.vaclavpalik.pewpewpew.model.Game;
+import com.github.vaclavpalik.pewpewpew.model.Player;
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantLock;
 
 
 public class MainActivity extends ActionBarActivity implements MenuFragment.OnFragmentInteractionListener, GameFragment.OnFragmentInteractionListener, UpgradeFragment.OnFragmentInteractionListener, AboutFragment.OnFragmentInteractionListener {
@@ -22,10 +28,11 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.OnFr
     private volatile GameFragment gameFragment;
     private volatile UpgradeFragment upgradeFragment;
     private volatile AboutFragment aboutFragment;
-    private volatile Fragment activeFragment=getGameFragment();
+    private volatile Fragment activeFragment = getGameFragment();
+    private Lock fragmentLock = new ReentrantLock();
 
-    public MainActivity(){
-        instance=this;
+    public MainActivity() {
+        instance = this;
     }
 
     public static MainActivity getInstance() {
@@ -73,7 +80,7 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.OnFr
     }
 
     public GameFragment getGameFragment() {
-        if(gameFragment==null)
+        if (gameFragment == null)
             synchronized (this) {
                 if (gameFragment == null)
                     gameFragment = new GameFragment();
@@ -82,19 +89,19 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.OnFr
     }
 
     public UpgradeFragment getUpgradeFragment() {
-        if(upgradeFragment==null)
-            synchronized (this){
-                if(upgradeFragment==null)
-                    upgradeFragment=new UpgradeFragment();
+        if (upgradeFragment == null)
+            synchronized (this) {
+                if (upgradeFragment == null)
+                    upgradeFragment = new UpgradeFragment();
             }
         return upgradeFragment;
     }
 
     public AboutFragment getAboutFragment() {
-        if(aboutFragment==null)
+        if (aboutFragment == null)
             synchronized (this) {
                 if (aboutFragment == null)
-                    aboutFragment= new AboutFragment();
+                    aboutFragment = new AboutFragment();
             }
         return aboutFragment;
     }
@@ -109,19 +116,55 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.OnFr
 
     }
 
+    @Override
+    protected void onPause() {
+        fragmentLock.lock();
+        try {
+            if (Game.isStarted())
+                Game.getInstance().haltSpawn();
+        } finally {
+            super.onPause();
+            fragmentLock.unlock();
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fragmentLock.lock();
+        try {
+            getFragmentManager().beginTransaction().replace(R.id.fragmentHolder, getActiveFragment()).commit();
+            if (Game.isStarted()) {
+                Game.getInstance().resumeSpawn();
+            }
+        } finally {
+            fragmentLock.unlock();
+        }
+
+    }
 
     public Fragment getActiveFragment() {
         return activeFragment;
     }
 
     public void setActiveFragment(Fragment newFragment) {
-        if(newFragment!=activeFragment){
-            synchronized (this){
-                if(newFragment!=activeFragment){
-                    getFragmentManager().beginTransaction().replace(R.id.fragmentHolder, newFragment).commit();
-                    activeFragment = newFragment;
+        if (newFragment != activeFragment) {
+            synchronized (this) {
+                if (newFragment != activeFragment) {
+                    fragmentLock.lock();
+                    try {
+                        getFragmentManager().beginTransaction().replace(R.id.fragmentHolder, newFragment).commit();
+                        activeFragment = newFragment;
+                    } finally {
+                        fragmentLock.unlock();
+                    }
                 }
             }
         }
+    }
+
+    public Lock getFragmentLock() {
+        return fragmentLock;
     }
 }
