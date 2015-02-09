@@ -188,29 +188,29 @@ public class Game {
         switch (getLevel()) {
             case 0:
                 spawnNewEnemyRandomly(EnemyTemplate.FIGHTER);
-                return 500;
+                return 1500;
             case 1:
                 spawnNewEnemyRandomly(EnemyTemplate.FIGHTER);
-                return 200;
+                return 600;
             case 2:
                 spawnNewEnemyRandomly(random.nextInt(3) == 0 ? EnemyTemplate.MOOK : EnemyTemplate.FIGHTER);
-                return 200;
+                return 600;
             case 3:
                 spawnNewEnemyRandomly(random.nextInt(3) == 0 ? EnemyTemplate.MOOK : EnemyTemplate.FIGHTER);
                 spawnNewEnemyRandomly(EnemyTemplate.FIGHTER);
-                return 200;
+                return 600;
             case 4:
                 spawnNewEnemyRandomly(EnemyTemplate.MOOK);
                 spawnNewEnemyRandomly(EnemyTemplate.FIGHTER);
-                return 200;
+                return 600;
             case 5:
                 spawnNewEnemyRandomly(random.nextInt(3) == 0 ? EnemyTemplate.BOMBER : EnemyTemplate.MOOK);
                 spawnNewEnemyRandomly(random.nextInt(3) == 0 ? EnemyTemplate.MOOK : EnemyTemplate.FIGHTER);
-                return 200;
+                return 600;
             case 6:
                 spawnNewEnemyRandomly(new IEnemyTemplate[]{EnemyTemplate.BOMBER, EnemyTemplate.ARMORED, EnemyTemplate.MOOK}[random.nextInt(3)]);
                 spawnNewEnemyRandomly(EnemyTemplate.FIGHTER);
-                return 100;
+                return 300;
             default:
                 return 100;
         }
