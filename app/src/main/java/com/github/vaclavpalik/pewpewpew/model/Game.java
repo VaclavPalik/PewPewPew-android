@@ -47,8 +47,6 @@ public class Game {
     };
 
     private Game() {
-
-
         new Thread(spawnTask).start();
         levelConditions.put(0, new Predicate<Integer>() {
             @Override
@@ -98,6 +96,12 @@ public class Game {
         return SingletonHolder.instance;
     }
 
+    /**
+     * Handles the enemy hitting.
+     * checks which enemies are hit and deals damage to them
+     * @param x the x coord
+     * @param y the y coord
+     */
     public synchronized void handleHit(int x, int y) {
         long time = System.currentTimeMillis();
         if (time - lastHit < 100) //cooldown
@@ -121,6 +125,9 @@ public class Game {
         }
     }
 
+    /**
+     * Redraws the game area where the enemies are spawned
+     */
     private void redraw() {
         MainActivity.getInstance().getFragmentLock().lock();
         try {
@@ -144,18 +151,32 @@ public class Game {
         }
     }
 
+    /**
+     *
+     * @return the current game's level
+     */
     public int getLevel() {
         return level;
     }
 
+    /**
+     * check if the conditions for the next level are met, if so, increases the game's level
+     */
     public void checkNextLevel() {
         if (levelConditions.get(level).apply(level))
             level++;
     }
 
+    /**
+     * halts the enemy spawn
+     */
     public void haltSpawn() {
         spawnHalted=true;
     }
+
+    /**
+     * resumes the enemy spawn
+     */
     public void resumeSpawn(){
         spawnHalted=false;
         new Thread(new Runnable() {
@@ -180,10 +201,18 @@ public class Game {
         }
     }
 
+    /**
+     *
+     * @return true if the game has already started
+     */
     public static boolean isStarted(){
         return isStarted;
     }
 
+    /**
+     * Spawns an enemy approtipriate to the current game's level
+     * @return the time in millis determining cooldown 'till next enemy spawn
+     */
     private int spawnEnemy() {
         switch (getLevel()) {
             case 0:
@@ -216,6 +245,10 @@ public class Game {
         }
     }
 
+    /**
+     * Spawns an enemy at random place
+     * @param template the template describing the type of enemy spawned
+     */
     private void spawnNewEnemyRandomly(IEnemyTemplate template) {
         Location location = getRandomLocation(template.getWidth(), template.getHeight());
         enemyLock.lock();
@@ -226,6 +259,12 @@ public class Game {
         }
     }
 
+    /**
+     * finds a suitable random location for a rectangle in the game's area
+     * @param width the width of the rectangle
+     * @param height the height of the rectangle
+     * @return a random suitable location
+     */
     private Location getRandomLocation(int width, int height) {
         return new Location(random.nextInt(MainActivity.getInstance().getGameFragment().getWidth() - width), random.nextInt(MainActivity.getInstance().getGameFragment().getHeight() - height));
     }

@@ -74,11 +74,18 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.OnFr
         return super.onOptionsItemSelected(item);
     }
 
-
+    /**
+     *
+     * @return the fragment used for the menu
+     */
     public MenuFragment getMenuFragment() {
         return menuFragment;
     }
 
+    /**
+     *
+     * @return the fragment used for the game tab
+     */
     public GameFragment getGameFragment() {
         if (gameFragment == null)
             synchronized (this) {
@@ -88,6 +95,10 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.OnFr
         return gameFragment;
     }
 
+    /**
+     *
+     * @return the fragment used for the buying upgrades
+     */
     public UpgradeFragment getUpgradeFragment() {
         if (upgradeFragment == null)
             synchronized (this) {
@@ -97,6 +108,10 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.OnFr
         return upgradeFragment;
     }
 
+    /**
+     *
+     * @return the fragment with description of this game
+     */
     public AboutFragment getAboutFragment() {
         if (aboutFragment == null)
             synchronized (this) {
@@ -144,10 +159,18 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.OnFr
 
     }
 
+    /**
+     *
+     * @return the current active fragment
+     */
     public Fragment getActiveFragment() {
         return activeFragment;
     }
 
+    /**
+     * Sets a new active fragment
+     * @param newFragment the fragment which should be active
+     */
     public void setActiveFragment(Fragment newFragment) {
         if (newFragment != activeFragment) {
             synchronized (this) {
@@ -164,6 +187,10 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.OnFr
         }
     }
 
+    /**
+     *
+     * @return the lock for fragment operations
+     */
     public Lock getFragmentLock() {
         return fragmentLock;
     }

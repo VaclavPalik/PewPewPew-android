@@ -24,10 +24,18 @@ public class Enemy {
         value = template.getValue();
     }
 
+    /**
+     *
+     * @return the x coord of the top-left corner
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     *
+     * @return the y coord of the top-left corner
+     */
     public float getY() {
         return y;
     }
@@ -36,6 +44,12 @@ public class Enemy {
         return bitmap;
     }
 
+    /**
+     * checks if this enemy is hit by a player's attack
+     * @param x the x coord of player's attack
+     * @param y the y coord of player's attack
+     * @return true if this enemy is hit
+     */
     public boolean inRange(int x, int y) {
         if (x < getX())
             if (y < getY())
@@ -60,6 +74,11 @@ public class Enemy {
 
     }
 
+    /**
+     * Deals given damage to this enemy
+     * @param damage
+     * @return if this enemy was destroyed by this hit
+     */
     public boolean hit(int damage) {
         hp-=Math.max(1, damage-armor);
         if(hp<=0) {
@@ -74,10 +93,18 @@ public class Enemy {
         Player.getInstance().addScore(value);
     }
 
+    /**
+     *
+     * @return width of this enemy's rectangle
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     *
+     * @return height of this enemy's rectangle
+     */
     public int getHeight() {
         return height;
     }

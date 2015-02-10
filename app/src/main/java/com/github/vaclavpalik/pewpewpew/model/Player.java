@@ -29,16 +29,32 @@ public class Player {
         return SingletonHolder.instance;
     }
 
+    /**
+     *
+     * @return the player's hit damage
+     */
     public int getDamage(){
         return damage.getLevel();
     }
 
+    /**
+     *
+     * @return the player's current money amount
+     */
     public int getMoney() {
         return money;
     }
 
+    /**
+     *
+     * @return the player's bonus to the money received for each kill
+     */
     public int getIncome() {return income.getLevel()-1;}
 
+    /**
+     * Sets the player's money
+     * @param money the new amount of money
+     */
     public void setMoney(int money) {
         this.money = money;
         TextView textView = (TextView) MainActivity.getInstance().getMenuFragment().getView().findViewById(R.id.moneyCounter);
@@ -47,14 +63,26 @@ public class Player {
         //MainActivity.getInstance().getUpgradeFragment().notifyChanged();
     }
 
+    /**
+     *
+     * @return all player's upgrades
+     */
     public List<Upgrade> getUpgrades() {
         return upgrades;
     }
 
+    /**
+     *
+     * @return the player's splash area of hits
+     */
     public int getRange() {
         return range.getLevel()-1;
     }
 
+    /**
+     *
+     * @return the player's score indicating the total value of enemies destroyed
+     */
     public int getScore() {
         return score;
     }
@@ -63,11 +91,19 @@ public class Player {
         private static Player instance = new Player();
     }
 
+    /**
+     * Makes the upgrade buyable
+     * @param upgrade
+     */
     private void registerUpgrade(Upgrade upgrade){
         Upgrades.addItem(upgrade);
         upgrades.add(upgrade);
     }
-    
+
+    /**
+     * Adds a specified amount to the player's score
+     * @param score
+     */
     public void addScore(int score){
         this.score+=score;
         Game.getInstance().checkNextLevel();

@@ -51,14 +51,26 @@ public class Upgrades {
             this.maxLevel = maxLevel;
         }
 
+        /**
+         *
+         * @return if the upgrade is on its max level
+         */
         public boolean isMaxed() {
             return level >= maxLevel;
         }
 
+        /**
+         *
+         * @return the level of this upgrade
+         */
         public int getLevel() {
             return level;
         }
 
+        /**
+         *
+         * @return the current cost of one level of this upgrade
+         */
         public int getCost() {
             return (int) (baseCost * Math.pow(level, costMultiplier));
         }
@@ -68,6 +80,10 @@ public class Upgrades {
             return name + "\n" + desc + "\n Level: " + (isMaxed()?"MAXED":(level + " Cost: "+getCost()));
         }
 
+        /**
+         * Tries to buy a level of this upgrade. If this operation is possible, performs it.
+         * @return true if a level of this upgrade was bought
+         */
         public boolean tryBuy() {
             if (level >= maxLevel)
                 return false;
